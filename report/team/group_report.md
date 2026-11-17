@@ -22,7 +22,7 @@ Mục tiêu cốt lõi của bài lab là giải quyết bài toán bồi thư�
   - Shape A (Deterministic Workflow): Đặng Nguyễn Nhật Minh (`2A202604118`).
   - Shape B (Single ReAct Agent): Nguyễn Trung Dũng (`bomgoa1102`); Lam bổ sung test cho Shape B.
   - Shape C (Orchestrator & Read-only Investigators): Nguyễn Duy Hưng (`2A202604110`).
-  - Host integration, Crash suite, Benchmark và Báo cáo nhóm: Cả nhóm phối hợp.
+  - Ledger, Durability, Benchmark, Evaluation & Báo cáo tổng hợp: Nguyễn Văn Lâm (`2A202604115`).
 
 ## 3. Giải pháp kỹ thuật
 
@@ -34,7 +34,7 @@ flowchart LR
 ```
 
 ### 3.1. Ranh giới giữa Code (Host) và Model
-- **Code và Host độc quyền:** 
+- **Code và Host độc quyền:**
   - Tính toán số tiền bồi thường (`compute_compensation`), kiểm tra điều kiện áp dụng policy (`is_current`, `effective_date <= 2026-11-15`).
   - Xác thực quyền sở hữu đơn hàng của principal (`lookup_order`).
   - Xác thực Approval: Kiểm tra approval có tồn tại, còn hạn, chưa bị thu hồi và mã `approval_id` phải trỏ đúng đến `claim_id` tương ứng.
@@ -96,10 +96,10 @@ Dữ liệu trích xuất trực tiếp từ file [src/reports/benchmark.json](.
 ## 6. Tổng hợp đóng góp
 
 Chi tiết đóng góp của từng thành viên được ghi nhận minh bạch tại [TEAM.md](../../TEAM.md) và các file báo cáo cá nhân trong thư mục `report/team/`:
-- **Đặng Nguyễn Nhật Minh (`2A202604118`):** Triển khai Shape A (Workflow), test case kiểm tra claim không tồn tại và xử lý ngoại lệ trace sạch, báo cáo cá nhân `2A202604118_DangNguyenNhatMinh.md`.
-- **Nguyễn Duy Hưng (`2A202604110`):** Triển khai Shape C (Orchestrator), xây dựng Handoff allowlist, viết bộ unit test `test_orchestrator_custom.py` kiểm tra an toàn Handoff và case thiếu order_id, báo cáo cá nhân `2A202604110_NguyenDuyHung.md`.
-- **Nguyễn Trung Dũng (`2A202604084`, `bomgoa1102`):** Triển khai Shape B và bổ sung hai test riêng cho Shape B trong `test_single.py` (commit `2bd35df`; ban đầu nằm trong `test_single_custom.py`).
-- **Lam:** Bổ sung các test Shape B trong `test_single.py` và benchmark (commit `54c098b`).
+- **Đặng Nguyễn Nhật Minh (`2A202604118`):** Triển khai Shape A (Deterministic Workflow) tại `src/lab8/shapes/workflow.py`, bổ sung bài test `test_workflow.py` kiểm tra xử lý claim lạ và đảm bảo trace contract v1 sạch, báo cáo cá nhân `2A202604118_DangNguyenNhatMinh.md`.
+- **Nguyễn Trung Dũng (`2A202604084`):** Triển khai Shape B (Single Agent ReAct) tại `src/lab8/shapes/single.py` với vòng lặp ReAct `worker=True` giới hạn tối đa 8 bước; bổ sung bài test `src/tests/test_single_custom.py` (kiểm tra claim lạ không refund và test crash phục hồi sau hoàn một phần không bị trùng lặp), báo cáo cá nhân `2A202604084_NguyenTrungDung.md`.
+- **Nguyễn Duy Hưng (`2A202604110`):** Triển khai Shape C (Orchestrator) tại `src/lab8/shapes/orchestrator.py`, xây dựng cơ chế Handoff Sanitization bảo vệ ranh giới dữ liệu cho Investigator chỉ đọc; viết bộ unit test `src/tests/test_orchestrator_custom.py` kiểm tra an toàn Handoff và case thiếu order_id, báo cáo cá nhân `2A202604110_NguyenDuyHung.md`.
+- **Nguyễn Văn Lâm (`2A202604115`):** Phụ trách kiểm thử an toàn Ledger, Idempotency và Crash Safety đạt 20/20 (`reports/crash.json`); vận hành thực nghiệm Benchmark 280 trials trên 4 kiến trúc (`reports/benchmark.json`); viết unit test `src/tests/test_single.py`; hoàn thiện tài liệu kiến trúc ADR (`decision_adr.md`), phiếu nghiên cứu (`research_card.md`) và chắp bút tổng hợp báo cáo nhóm (`group_report.md`), báo cáo cá nhân `2A202604115_NguyenVanLam.md`.
 
 ## 7. Hạn chế và hướng cải thiện
 

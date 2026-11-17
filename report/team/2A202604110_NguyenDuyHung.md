@@ -1,10 +1,10 @@
-# Báo cáo cá nhân — Nguyễn Duy Hùng
+# Báo cáo cá nhân — Nguyễn Duy Hưng
 
 ## 1. Thông tin thành viên
 
 - Họ tên: Nguyễn Duy Hưng
 - MSSV: 2A202604110
-- Email: nguyenduyhung101010@gmail.com
+- Email:  26ai.hungnd6@vinuni.edu.vn
 - GitHub: Hungnd1208
 
 ## 2. Phần việc phụ trách

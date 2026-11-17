@@ -21,7 +21,7 @@ Mục tiêu cốt lõi của bài lab là giải quyết bài toán bồi thư�
 - **Phân công trách nhiệm:**
   - Shape A (Deterministic Workflow): Đặng Nguyễn Nhật Minh (`2A202604118`).
   - Shape B (Single ReAct Agent): bomgoa1102 / lam.
-  - Shape C (Orchestrator & Read-only Investigators): Nguyễn Duy Hùng (`2A202604110`).
+  - Shape C (Orchestrator & Read-only Investigators): Nguyễn Duy Hưng (`2A202604110`).
   - Host integration, Crash suite, Benchmark và Báo cáo nhóm: Cả nhóm phối hợp.
 
 ## 3. Giải pháp kỹ thuật
@@ -97,7 +97,7 @@ Dữ liệu trích xuất trực tiếp từ file [src/reports/benchmark.json](.
 
 Chi tiết đóng góp của từng thành viên được ghi nhận minh bạch tại [TEAM.md](../../TEAM.md) và các file báo cáo cá nhân trong thư mục `report/team/`:
 - **Đặng Nguyễn Nhật Minh (`2A202604118`):** Triển khai Shape A (Workflow), test case kiểm tra claim không tồn tại và xử lý ngoại lệ trace sạch, báo cáo cá nhân `2A202604118_DangNguyenNhatMinh.md`.
-- **Nguyễn Duy Hùng (`2A202604110`):** Triển khai Shape C (Orchestrator), xây dựng Handoff allowlist, viết bộ unit test `test_orchestrator_custom.py` kiểm tra an toàn Handoff và case thiếu order_id, báo cáo cá nhân `2A202604110_NguyenDuyHung.md`.
+- **Nguyễn Duy Hưng (`2A202604110`):** Triển khai Shape C (Orchestrator), xây dựng Handoff allowlist, viết bộ unit test `test_orchestrator_custom.py` kiểm tra an toàn Handoff và case thiếu order_id, báo cáo cá nhân `2A202604110_NguyenDuyHung.md`.
 - **Thành viên phụ trách Shape B & Tổng hợp:** Hoàn thiện Shape B (Single ReAct), viết test `test_single.py`, thực thi benchmark và crash suite.
 
 ## 7. Hạn chế và hướng cải thiện

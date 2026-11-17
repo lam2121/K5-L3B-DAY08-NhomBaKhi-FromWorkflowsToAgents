@@ -40,7 +40,7 @@ flowchart LR
   - Xác thực Approval: Kiểm tra approval có tồn tại, còn hạn, chưa bị thu hồi và mã `approval_id` phải trỏ đúng đến `claim_id` tương ứng.
   - Áp dụng trần hoàn tiền theo đơn hàng (Order Cap) và xử lý chênh lệch khi có nhiều claim trên cùng một đơn (T13, T14).
   - Ghi nhận cơ sở dữ liệu (`refund_ledger`) với khóa chống trùng lặp `refund:{claim_id}`.
-- **Model (MockLLM):** Chỉ thực hiện đọc hiểu ticket và soạn thảo nội dung giải thích cho khách hàng (`draft`). Model tuyệt đối không được quyết định số tiền hoàn hay gọi trực tiếp các lệnh ghi cơ sở dữ liệu.
+- **Model (MockLLM):** Vai trò khác nhau theo từng shape. Riêng Shape B gọi MockLLM để mô phỏng và tính chi phí; code quyết định các nhánh chọn công cụ, không đưa nội dung ticket vào prompt. Model không quyết định số tiền hoàn hay trực tiếp ghi cơ sở dữ liệu.
 
 ### 3.2. Chi tiết ba shape tự xây dựng
 
@@ -77,7 +77,7 @@ Dữ liệu trích xuất trực tiếp từ file [src/reports/benchmark.json](.
 | **D - Swarm (Ref)** | 70 | 0.9857 | 0.9286 | 0.9286 - 1.0 | 0.000816 | 49.57 | 2.80 | 3.0 | 3.00 | 4.66 |
 
 ### 4.2. Kết quả kiểm tra Crash Safety và Cổng Host
-- **Crash Safety:** File [src/reports/crash.json](../../src/reports/crash.json) đạt điểm tuyệt đối **`20/20`**. Mọi kịch bản giả lập crash trước hoặc sau khi ghi effect đều đảm bảo phục hồi an toàn, chỉ duy nhất một bản ghi refund được commit trên ledger.
+- **Crash Safety:** Suite chung được ghi trong [src/reports/crash.json](../../src/reports/crash.json) đạt **`20/20`**; kết quả này không có nghĩa là mỗi shape được kiểm tra riêng qua cả 20 kịch bản. Shape B còn có test riêng trong `src/tests/test_single.py`: crash sau khi ghi hoàn tiền nhưng trước checkpoint, sau đó chạy lại để kiểm tra không hoàn trùng và tạo checkpoint.
 - **Rò rỉ Secret & Bypass Approval:** Cả 4 shape đạt `approval_bypass_count = 0` và `secret_leak_count = 0`.
 - **Cổng Host test:** `python -m pytest -q` đạt trạng thái xanh 100%.
 
@@ -97,9 +97,9 @@ Dữ liệu trích xuất trực tiếp từ file [src/reports/benchmark.json](.
 
 Chi tiết đóng góp của từng thành viên được ghi nhận minh bạch tại [TEAM.md](../../TEAM.md) và các file báo cáo cá nhân trong thư mục `report/team/`:
 - **Đặng Nguyễn Nhật Minh (`2A202604118`):** Triển khai Shape A (Deterministic Workflow) tại `src/lab8/shapes/workflow.py`, bổ sung bài test `test_workflow.py` kiểm tra xử lý claim lạ và đảm bảo trace contract v1 sạch, báo cáo cá nhân `2A202604118_DangNguyenNhatMinh.md`.
-- **Nguyễn Trung Dũng (`2A202604084`):** Triển khai Shape B (Single Agent ReAct) tại `src/lab8/shapes/single.py` với vòng lặp ReAct `worker=True` giới hạn tối đa 8 bước; bổ sung bài test `src/tests/test_single_custom.py` (kiểm tra claim lạ không refund và test crash phục hồi sau hoàn một phần không bị trùng lặp), báo cáo cá nhân `2A202604084_NguyenTrungDung.md`.
+- **Nguyễn Trung Dũng (`2A202604084`):** Triển khai Shape B (Single Agent ReAct) tại `src/lab8/shapes/single.py` với vòng lặp ReAct `worker=True` giới hạn tối đa 8 bước; bổ sung hai test trong `src/tests/test_single.py` (ban đầu ở `test_single_custom.py`): kiểm tra claim lạ không refund và phục hồi sau crash khi hoàn một phần không bị trùng lặp, báo cáo cá nhân `2A202604084_NguyenTrungDung.md`.
 - **Nguyễn Duy Hưng (`2A202604110`):** Triển khai Shape C (Orchestrator) tại `src/lab8/shapes/orchestrator.py`, xây dựng cơ chế Handoff Sanitization bảo vệ ranh giới dữ liệu cho Investigator chỉ đọc; viết bộ unit test `src/tests/test_orchestrator_custom.py` kiểm tra an toàn Handoff và case thiếu order_id, báo cáo cá nhân `2A202604110_NguyenDuyHung.md`.
-- **Nguyễn Văn Lâm (`2A202604115`):** Phụ trách kiểm thử an toàn Ledger, Idempotency và Crash Safety đạt 20/20 (`reports/crash.json`); vận hành thực nghiệm Benchmark 280 trials trên 4 kiến trúc (`reports/benchmark.json`); viết unit test `src/tests/test_single.py`; hoàn thiện tài liệu kiến trúc ADR (`decision_adr.md`), phiếu nghiên cứu (`research_card.md`) và chắp bút tổng hợp báo cáo nhóm (`group_report.md`), báo cáo cá nhân `2A202604115_NguyenVanLam.md`.
+- **Nguyễn Văn Lâm (`2A202604115`):** Phụ trách kiểm thử an toàn Ledger, Idempotency và Crash Safety đạt 20/20 (`reports/crash.json`); vận hành thực nghiệm Benchmark 280 trials trên 4 kiến trúc (`reports/benchmark.json`); viết ba unit test Shape B trong `src/tests/test_single.py`; hoàn thiện tài liệu kiến trúc ADR (`decision_adr.md`), phiếu nghiên cứu (`research_card.md`) và chắp bút tổng hợp báo cáo nhóm (`group_report.md`), báo cáo cá nhân `2A202604115_NguyenVanLam.md`.
 
 ## 7. Hạn chế và hướng cải thiện
 

@@ -30,7 +30,7 @@ Gợi ý chia vai:
 | Nguyễn Văn Lâm | ledger + evaluation | 54c098b | test_single.py::test_single_successful_refund_execution |
 | Nguyễn Duy Hưng | orchestrator + handoff | e0e5924 | test_orchestrator_custom.py::test_orchestrator_handoff_safety_and_readonly |
 | Đặng Nguyễn Nhật Minh | workflow + integration | ffa17da | test_workflow.py::test_unknown_claim_fails_without_refund_and_writes_clean_trace |
-| Nguyễn Trung Dũng | single | 2bd35df | test_single_custom.py::test_single_unknown_claim_does_not_refund_and_writes_safe_trace |
+| Nguyễn Trung Dũng | single | 2bd35df | test_single.py::test_single_unknown_claim_does_not_refund_and_writes_safe_trace |
 
 ## Cá nhân
 
@@ -105,11 +105,11 @@ Ví dụ: `report/team/20241234_NguyenVanAn.md`.
 ### Đóng góp cụ thể
 
 - Commit `1202bf6`: `shape B` — triển khai `run_claim()`, hàm `decide()` giới hạn tối đa 8 bước; đọc claim, xác minh đơn hàng theo `principal_id`, đọc policy, tính bồi hoàn bằng code và chuyển quote đầy đủ cho Host `issue_refund`.
-- Commit `2bd35df`: `add more test shape B` — bổ sung file `src/tests/test_single_custom.py` với 2 ca kiểm thử chuyên sâu: kiểm tra claim lạ không tồn tại và kiểm tra xử lý hoàn tiền một phần khi gặp crash rồi khôi phục không bị hoàn trùng (exactly-once).
+- Commit `2bd35df`: `add more test shape B` — bổ sung 2 ca kiểm thử trong `src/tests/test_single_custom.py`, sau đó được chuyển sang `src/tests/test_single.py`: kiểm tra claim lạ không tồn tại và kiểm tra xử lý hoàn tiền một phần khi gặp crash rồi khôi phục không bị hoàn trùng (exactly-once).
 
 ### Bằng chứng
 
 - File báo cáo cá nhân: `report/team/2A202604084_NguyenTrungDung.md`
 - Link commit chính: https://github.com/lam2121/K5-L3B-DAY08-NhomBaKhi-FromWorkflowsToAgents/commit/1202bf65c7bd793aa2f8291ad69eaf9d52c395fa
 - Link commit test: https://github.com/lam2121/K5-L3B-DAY08-NhomBaKhi-FromWorkflowsToAgents/commit/2bd35dfd1927793879f462f6cb7fdf49e94f3a96
-- Kết quả test: `tests/test_single_custom.py` đạt **2 passed**, ma trận student Shape B đạt **62 passed**.
+- Kết quả test: `tests/test_single.py` sau khi gộp đạt **5 passed** (gồm 2 test của Dũng và 3 test của Lâm); ma trận student Shape B đạt **62 passed**.

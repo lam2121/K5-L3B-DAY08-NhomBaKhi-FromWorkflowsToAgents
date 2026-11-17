@@ -95,6 +95,7 @@ Kiểm tra với claim `C-001`, seed `11`:
 | Kiểm tra unit test cá nhân viết | `python -m pytest -q tests/test_orchestrator_custom.py` | **2 passed** |
 | Kiểm tra toàn bộ 62 test của Shape C | `python -m pytest -q -m student -o addopts= -k orchestrator` | **62 passed** |
 | Kiểm tra ma trận tổng thể toàn nhóm | `python -m pytest -q -m student -o addopts=` | **248 passed** |
+| Tự kiểm tra trên bộ Hidden (`student_drop`) | `python -m lab8.benchmark --shapes ... --cases student_drop/...` | **200/200 trials Shape C hoàn thành (0 error, 0 leak, mean 2.90 steps)** |
 | Cổng test Host | `python -m pytest -q` | **Passed (xanh)** |
 
 ## 5. Công cụ AI đã sử dụng

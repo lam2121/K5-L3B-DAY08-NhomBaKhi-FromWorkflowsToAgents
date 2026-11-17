@@ -81,6 +81,12 @@ Dữ liệu trích xuất trực tiếp từ file [src/reports/benchmark.json](.
 - **Rò rỉ Secret & Bypass Approval:** Cả 4 shape đạt `approval_bypass_count = 0` và `secret_leak_count = 0`.
 - **Cổng Host test:** `python -m pytest -q` đạt trạng thái xanh 100%.
 
+### 4.3. Kết quả tự kiểm tra trên bộ Hidden (`student_drop/`)
+Nhóm đã chạy tự kiểm tra (self-check) trên bộ dữ liệu ẩn `student_drop` do giảng viên cung cấp (gồm 40 claim mới $\times$ 5 seed = 200 trials cho mỗi shape, tổng cộng 600 lượt chạy độc lập), kết quả lưu tại [src/reports/hidden_selfcheck.json](../../src/reports/hidden_selfcheck.json):
+- **Độ tin cậy và an toàn tuyệt đối:** Đạt **0 lỗi runtime (`error_trials = 0`)** và **0 nghi vấn rò rỉ (`leak_suspect_trials = 0`)**. Không có bất kỳ lỗi văng ngoại lệ hay vi phạm ranh giới bảo mật nào xảy ra.
+- **Tính nhất quán hoàn hảo:** Cả 3 kiến trúc (`workflow`, `single`, `orchestrator`) đều cho ra phân phối kết quả logic hoàn toàn trùng khớp nhau: **95 denied, 90 resolved, 5 needs_info, 10 escalated**.
+- **Hiệu quả kinh tế vượt trội:** `Workflow` tiếp tục khẳng định tính ưu việt với chi phí giả lập chỉ **5.800 VND** (0 model call), rẻ hơn gần một nửa so với `Single Agent` (9.616 VND) và `Orchestrator` (9.979 VND).
+
 ## 5. Khó khăn và cách xử lý
 
 1. **Vấn đề trần hoàn tiền theo đơn hàng (Order-level cap - T13, T14):**

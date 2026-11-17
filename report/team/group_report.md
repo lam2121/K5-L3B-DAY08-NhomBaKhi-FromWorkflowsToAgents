@@ -20,7 +20,7 @@ Mục tiêu cốt lõi của bài lab là giải quyết bài toán bồi thư�
   4. *CP5:* Chạy Benchmark 4 shape trên 5 seed, phân tích kết quả, lập báo cáo ADR và hoàn thiện hồ sơ nộp bài.
 - **Phân công trách nhiệm:**
   - Shape A (Deterministic Workflow): Đặng Nguyễn Nhật Minh (`2A202604118`).
-  - Shape B (Single ReAct Agent): bomgoa1102 / lam.
+  - Shape B (Single ReAct Agent): Nguyễn Trung Dũng (`bomgoa1102`); Lam bổ sung test cho Shape B.
   - Shape C (Orchestrator & Read-only Investigators): Nguyễn Duy Hưng (`2A202604110`).
   - Host integration, Crash suite, Benchmark và Báo cáo nhóm: Cả nhóm phối hợp.
 
@@ -98,7 +98,8 @@ Dữ liệu trích xuất trực tiếp từ file [src/reports/benchmark.json](.
 Chi tiết đóng góp của từng thành viên được ghi nhận minh bạch tại [TEAM.md](../../TEAM.md) và các file báo cáo cá nhân trong thư mục `report/team/`:
 - **Đặng Nguyễn Nhật Minh (`2A202604118`):** Triển khai Shape A (Workflow), test case kiểm tra claim không tồn tại và xử lý ngoại lệ trace sạch, báo cáo cá nhân `2A202604118_DangNguyenNhatMinh.md`.
 - **Nguyễn Duy Hưng (`2A202604110`):** Triển khai Shape C (Orchestrator), xây dựng Handoff allowlist, viết bộ unit test `test_orchestrator_custom.py` kiểm tra an toàn Handoff và case thiếu order_id, báo cáo cá nhân `2A202604110_NguyenDuyHung.md`.
-- **Thành viên phụ trách Shape B & Tổng hợp:** Hoàn thiện Shape B (Single ReAct), viết test `test_single.py`, thực thi benchmark và crash suite.
+- **Nguyễn Trung Dũng (`2A202604084`, `bomgoa1102`):** Triển khai Shape B và bổ sung hai test riêng cho Shape B trong `test_single.py` (commit `2bd35df`; ban đầu nằm trong `test_single_custom.py`).
+- **Lam:** Bổ sung các test Shape B trong `test_single.py` và benchmark (commit `54c098b`).
 
 ## 7. Hạn chế và hướng cải thiện
 

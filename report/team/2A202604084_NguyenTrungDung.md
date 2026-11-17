@@ -24,7 +24,7 @@ Commit chính: [`1202bf65c7bd793aa2f8291ad69eaf9d52c395fa`](https://github.com/l
 
 ### Test bổ sung
 
-Commit [`2bd35df`](https://github.com/lam2121/K5-L3B-DAY08-NhomBaKhi-FromWorkflowsToAgents/commit/2bd35dfd1927793879f462f6cb7fdf49e94f3a96) (`add more test shape B`) bổ sung `src/tests/test_single_custom.py` với hai test:
+Commit [`2bd35df`](https://github.com/lam2121/K5-L3B-DAY08-NhomBaKhi-FromWorkflowsToAgents/commit/2bd35dfd1927793879f462f6cb7fdf49e94f3a96) (`add more test shape B`) bổ sung hai test vào `src/tests/test_single_custom.py`; hai test này sau đó được chuyển sang `src/tests/test_single.py` cùng các test của Lam:
 
 - `test_single_unknown_claim_does_not_refund_and_writes_safe_trace`: kiểm tra claim không tồn tại trả về lỗi phù hợp, không tạo khoản hoàn tiền hoặc audit đã commit, và vẫn tạo trace JSON không chứa chuỗi secret mẫu. Test được Codex hỗ trợ tạo sau commit chính.
 - `test_single_partial_refund_crash_then_replay_is_exactly_once`: kiểm tra trường hợp đơn đã được hoàn một phần, ticket chứa chỉ dẫn giả và secret; sau crash tại thời điểm đã ghi hoàn tiền nhưng chưa checkpoint, chạy lại vẫn chỉ có một giao dịch, đúng giới hạn hoàn tiền, tạo checkpoint và không lộ secret trong trace sau khi chạy lại. Test cũng kiểm tra Shape đề xuất toàn bộ 150.000 VND, còn host hoàn phần còn lại 120.000 VND.
@@ -39,7 +39,7 @@ Commit [`2bd35df`](https://github.com/lam2121/K5-L3B-DAY08-NhomBaKhi-FromWorkflo
   ```
 
   Kết quả kiểm tra trong môi trường dự án: **62 passed, 244 deselected**. Bộ này bao gồm các trường hợp public với nhiều seed, retry và crash; không thay thế kiểm thử hidden của giảng viên. Số deselected có thể thay đổi khi thêm test.
-- Chạy test bổ sung: `python -m pytest -q tests/test_single_custom.py` — **2 passed**.
+- Chạy test bổ sung trước khi gộp: `python -m pytest -q tests/test_single_custom.py` — **2 passed**. Sau khi gộp, chạy `python -m pytest -q tests/test_single.py` — **5 passed**, gồm hai test trên và ba test của Lam.
 - Trước đó tôi đã chạy `python -m pytest -q -m student -o addopts= -k workflow` và nhận được `62 passed, 241 deselected`; kết quả đó thuộc Shape A, không dùng để chứng minh Shape B.
 
 ## 5. Công cụ AI đã dùng
